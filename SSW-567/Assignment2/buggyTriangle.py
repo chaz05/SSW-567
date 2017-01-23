@@ -18,7 +18,7 @@ from sys import float_info
 FLOAT_MIN = float_info.min
 FLOAT_MAX = float_info.max
 
-def classifyTriangle(a,b,c):
+def classifyTriangle(a,b,c,res = 0.00001):
     """
     
     This function returns a string with the type of triangle from three integer values
@@ -35,31 +35,34 @@ def classifyTriangle(a,b,c):
       BEWARE: there may be a bug or two in this code
         
     """
-    # require that the input values be > 0 and <= 200
-    if a > 200 and b > 200 or c > 200:
-        return 'InvalidInput'
-        
-    if a <= 0 or b <= b or c <= 0:
-        return 'InvalidInput'
     
     # verify that all 3 inputs are integers  
     # Python's "isinstance(object,type) returns True if the object is of the specified type
-    if not(isinstance(a,int) and isinstance(b,int) and isinstance(c,int)):
+    if not(isinstance(a,(float,int)) and isinstance(b,(float,int)) and isinstance(c,(float,int))):
         return 'InvalidInput';
         
+    if a <= 0 or b <= 0 or c <= 0:
+        return 'InvalidInput'
+    
+    longest = [a, b, c]
+    longest.sort()
+    a = longest[0]
+    b = longest[1]
+    c = longest[2]
+    
     # This information was not in the requirements spec but 
     # is important for correctness
     # the sum of any two sides must be strictly less than the third side
     # of the specified shape is not a triangle
-    if (a >= (b - c)) or (b >= (a - c)) or (c >= (a + b)):
+    if (a >= (b + c)) or (b >= (a + c)) or (c >= (a + b)):
         return 'NotATriangle'
         
     # now we know that we have a valid triangle 
-    if a == b and b == a:
+    if a == b and b == c:
         return 'Equilateral'
-    elif ((a * 2) + (b * 2)) == (c * 2):
+    elif (a**2 + b**2)+res >= c**2 and (a**2 + b**2)-res <= c**2:
         return 'Right'
-    elif (a != b) and  (b != c) and (a != b):
+    elif (a != b) and  (b != c) and (a != c):
         return 'Scalene'
     else:
         return 'Isoceles'
@@ -80,7 +83,7 @@ class TestTriangles(unittest.TestCase):
         # your tests go here.  Include as many tests as you'd like
         self.assertEqual(classifyTriangle(1,2,3),'NotATriangle','1,2,3 is not a triangle')
     def testInvalid2(self): # test invalid inputs
-        self.assertEqual(classifyTriangle(0,0,0),'NotATriangle','0,0,0 is not a triangle')
+        self.assertEqual(classifyTriangle(0,0,0),'InvalidInput','0,0,0 is invalid input')
     def testInvalid3(self): # test invalid inputs
         self.assertEqual(classifyTriangle(-2,3,4),'InvalidInput','-2,3,4 is invalid input')
     def testInvalid4(self): # test invalid inputs
@@ -100,12 +103,12 @@ class TestTriangles(unittest.TestCase):
     def testValid4(self): 
         self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 should be Right')
     def testValid5(self): 
-        self.assertEqual(classifyTriangle(1,1,sqrt(2)),'Right','1,1,1.141 should be Right')
+        self.assertEqual(classifyTriangle(1,1,sqrt(2)),'Right','1,1,sqrt(2) should be Right')
 
     def testRange1(self): 
         # define multiple test sets to test different aspects of the code
         # notice that tests can have bugs too!
-        self.assertEqual(classifyTriangle(150, 220, 100),'InvalidInput','150,220,100 should be InvalidInput')
+        self.assertEqual(classifyTriangle(150, 220, 100),'Scalene','150,220,100 should be Scalene')
     def testRange2(self):
         self.assertEqual(classifyTriangle(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX),'Equilateral',' FLOAT_MAX, FLOAT_MAX, FLOAT_MAX should be Equilateral')
     def testRange3(self):
@@ -119,7 +122,8 @@ class TestTriangles(unittest.TestCase):
         self.assertEqual(classifyTriangle(sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,FLOAT_MAX),'Right','sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,FLOAT_MAX Should be Right Triangle')
     def testRobust3(self): 
         self.assertEqual(classifyTriangle(sqrt(sqrt(FLOAT_MAX))/2,sqrt(sqrt(FLOAT_MAX))/2,sqrt(FLOAT_MAX)),'Right','sqrt(sqrt(FLOAT_MAX))/2,sqrt(sqrt(FLOAT_MAX))/2,sqrt(FLOAT_MAX) Should be Right Triangle')
-        
+    def testRobust4(self):
+        self.assertEqual(classifyTriangle(5,4,3),'Right','5,4,3 Should be Right Triangle')
 
 if __name__ == '__main__':
     # examples of running the  code
