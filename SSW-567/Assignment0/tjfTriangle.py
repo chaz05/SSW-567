@@ -11,11 +11,19 @@ def classifyTriangle(a, b, c, thresh = 0.0001):
     thresh represents the resolution for comparing two sides to be equal
     '''
     
+    # Validate that the entries actually form a triangle
+    validT = ((a + b) > c) and ((b + c) > a) and ((a + c) > b)
+        
     # Classify the type of triangle based on the
     # relationship of lengths of the sides
-    equilateral = (a == b) and (a == c)
-    isosceles = ((a == b) and (a != c)) or ((a == c) and (a != b)) or ((b == c) and (a != b))
-    scalene = (a != b) and (a != c) and (b != c)
+    if validT:
+        equilateral = (a == b) and (a == c)
+        isosceles = ((a == b) and (a != c)) or ((a == c) and (a != b)) or ((b == c) and (a != b))
+        scalene = (a != b) and (a != c) and (b != c)
+    else:
+        equilateral = False
+        isosceles = False
+        scalene = False
     
     # Determine if the triangle is a right triangle
     # a^2 + b^2 = c^2
@@ -31,7 +39,7 @@ def classifyTriangle(a, b, c, thresh = 0.0001):
     elif scalene:
         print("TJF: %s, %s, %s :: scalene, right: %s" % (a, b, c, right))
     else:
-        print("TJF: indetermined type")
+        print("TJF: Not a triangle")
     
     return scalene, isosceles, equilateral, right
 
