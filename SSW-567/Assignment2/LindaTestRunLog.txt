@@ -1,0 +1,29 @@
+Finding files... done.
+Importing test modules ... done.
+
+======================================================================
+FAIL: testClassifyTriangle1 (buggyTriangle.TestTriangles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Project_Files\swdev\ssw567\SSW-567\SSW-567\Assignment2\buggyTriangle.py", line 77, in testClassifyTriangle1
+    self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 is a Right triangle')
+AssertionError: 'InvalidInput' != 'Right'
+- InvalidInput
++ Right
+ : 3,4,5 is a Right triangle
+
+======================================================================
+FAIL: testClassifyTriangle2 (buggyTriangle.TestTriangles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Project_Files\swdev\ssw567\SSW-567\SSW-567\Assignment2\buggyTriangle.py", line 82, in testClassifyTriangle2
+    self.assertEqual(classifyTriangle(1,1,1),'Equilateral','1,1,1 should be equilateral')
+AssertionError: 'InvalidInput' != 'Equilateral'
+- InvalidInput
++ Equilateral
+ : 1,1,1 should be equilateral
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=2)
