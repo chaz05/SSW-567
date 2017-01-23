@@ -7,6 +7,8 @@ Created on Jan 23, 2017
 def classifyTriangle(a, b, c, thresh = 0.0001):
     '''
     Function returns type of triangle
+    a, b, and c are the lengths of each of the sides. Expect real values.
+    thresh represents the resolution for comparing two sides to be equal
     '''
     
     # Classify the type of triangle based on the
