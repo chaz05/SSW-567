@@ -9,7 +9,7 @@ import tjfTriangle as Travis
 from math import sqrt
 
 class Test(unittest.TestCase):
-    members = [Tony, Travis]
+    members = [Tony,Travis]
 
     def testNominalScalene(self):
         for member in self.members:
