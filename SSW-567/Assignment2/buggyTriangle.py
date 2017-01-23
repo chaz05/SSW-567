@@ -13,6 +13,10 @@ Note that this code includes intentional errors for you to find.
 """
 
 import unittest     # this makes Python unittest module available
+from math import sqrt
+from sys import float_info
+FLOAT_MIN = float_info.min
+FLOAT_MAX = float_info.max
 
 def classifyTriangle(a,b,c):
     """
@@ -72,16 +76,37 @@ def runClassifyTriangle(a, b, c):
 class TestTriangles(unittest.TestCase):
     # define multiple sets of tests as functions with names that begin
     # with 'test'.  Each function may include multiple tests
-    def testClassifyTriangle1(self): # test invalid inputs
+    def testInvalid(self): # test invalid inputs
         # your tests go here.  Include as many tests as you'd like
-        self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 is a Right triangle')
+        self.assertEqual(classifyTriangle(1,2,3),'NotATriangle','1,2,3 is not a triangle')
+        self.assertEqual(classifyTriangle(0,0,0),'NotATriangle','0,0,0 is not a triangle')
+        self.assertEqual(classifyTriangle(-2,3,4),'InvalidInput','-2,3,4 is invalid input')
+        self.assertEqual(classifyTriangle('a','b','c'),'InvalidInput','a,b,c is invalid input')
+        self.assertEqual(classifyTriangle(1,2,3,4,5),'InvalidInput','1,2,3,4,5 is invalid input')
+
         
-    def testClassifyTriangle2(self): 
+    def testValid(self): 
         # define multiple test sets to test different aspects of the code
         # notice that tests can have bugs too!
-        self.assertEqual(classifyTriangle(1,1,1),'Equilateral','1,1,1 should be equilateral')
-        self.assertNotEqual(classifyTriangle(10,10,10),'Isoceles','Should be Equilateral')
-        self.assertEqual(classifyTriangle(10,15,30),'Scalene','Should be Isoceles')
+        self.assertEqual(classifyTriangle(1,2,2.5),'Scalene','1,2,2.5 should be Scalene')
+        self.assertEqual(classifyTriangle(2,2,3.999),'Isoceles','2,2,3.999 should be Isoceles')
+        self.assertEqual(classifyTriangle(2,2,2),'Equilateral','2,2,2 should be Equilateral')
+        self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 should be Right')
+        self.assertEqual(classifyTriangle(1,1,sqrt(2)),'Right','1,1,1.141 should be Right')
+
+    def testRange(self): 
+        # define multiple test sets to test different aspects of the code
+        # notice that tests can have bugs too!
+        self.assertEqual(classifyTriangle(150, 220, 100),'InvalidInput','150,220,100 should be InvalidInput')
+        self.assertEqual(classifyTriangle(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX),'Equilateral',' FLOAT_MAX, FLOAT_MAX, FLOAT_MAX should be Equilateral')
+        self.assertEqual(classifyTriangle(FLOAT_MIN, FLOAT_MIN, FLOAT_MIN),'NotATriangle',' FLOAT_MIN, FLOAT_MIN, FLOAT_MIN should be NotATriangle')
+                
+    def testRobust(self): 
+        # define multiple test sets to test different aspects of the code
+        # notice that tests can have bugs too!
+        self.assertNotEqual(classifyTriangle(10,10,10),'Isoceles','10,10,10 Should be Equilateral')
+        self.assertEqual(classifyTriangle(sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,FLOAT_MAX),'Right','sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,FLOAT_MAX Should be Right Triangle')
+        self.assertEqual(classifyTriangle(sqrt(sqrt(FLOAT_MAX))/2,sqrt(sqrt(FLOAT_MAX))/2,sqrt(FLOAT_MAX)),'Right','sqrt(sqrt(FLOAT_MAX))/2,sqrt(sqrt(FLOAT_MAX))/2,sqrt(FLOAT_MAX) Should be Right Triangle')
         
 
 if __name__ == '__main__':
