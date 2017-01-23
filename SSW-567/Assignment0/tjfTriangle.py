@@ -20,16 +20,17 @@ def classifyTriangle(a, b, c, thresh = 0.0001):
         equilateral = (a == b) and (a == c)
         isosceles = ((a == b) and (a != c)) or ((a == c) and (a != b)) or ((b == c) and (a != b))
         scalene = (a != b) and (a != c) and (b != c)
+        
+        # Determine if the triangle is a right triangle
+        # a^2 + b^2 = c^2
+        sumofsqr = (a**2 + b**2)
+        hypsqr = c**2
+        right = (abs((sumofsqr - hypsqr)) <= thresh)
     else:
         equilateral = False
         isosceles = False
         scalene = False
-    
-    # Determine if the triangle is a right triangle
-    # a^2 + b^2 = c^2
-    sumofsqr = (a**2 + b**2)
-    hypsqr = c**2
-    right = (abs((sumofsqr - hypsqr)) <= thresh)
+        right = False
     
     # Print the result of the classification
     if equilateral:
