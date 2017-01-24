@@ -7,7 +7,8 @@ The primary goal of this file is to demonstrate a simple python program and the 
 unittest package.
 
 Note that this code includes intentional errors for you to find.
-
+1/24/2017 5:30:03 AM - Rak, Travis, Tony, Courtney
+Corrected issues and added tests.
 
 @author: jrr
 """
