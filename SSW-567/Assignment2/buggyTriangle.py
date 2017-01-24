@@ -94,8 +94,8 @@ class TestTriangles(unittest.TestCase):
     def testInvalid4(self): # test invalid inputs
         self.assertEqual(classifyTriangle('a','b','c'),'InvalidInput','a,b,c is invalid input')
     def testInvalid5(self): # test invalid inputs
-        self.assertEqual(classifyTriangle(1,2,3,4,5),'InvalidInput','1,2,3,4,5 is invalid input')
-
+        with self.assertRaises(TypeError, msg='1,2,3,4,5 is invalid input'):
+            classifyTriangle(1,2,3,4,5)
         
     def testValid1(self): 
         # define multiple test sets to test different aspects of the code
@@ -126,7 +126,8 @@ class TestTriangles(unittest.TestCase):
     def testRobust2(self): 
         self.assertEqual(classifyTriangle(FLOAT_MAX,FLOAT_MAX,FLOAT_MAX*sqrt(2)),'NotATriangle','FLOAT_MAX,FLOAT_MAX,FLOAT_MAX*sqrt(2) Should be Right Triangle')
     def testRobust3(self): 
-        self.assertEqual(classifyTriangle(sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2)),'Right','sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2) Should be Right Triangle')
+        with self.assertRaises(OverflowError, msg='sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2) Should be Overflow'):
+            classifyTriangle(sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2))
     def testRobust4(self):
         self.assertEqual(classifyTriangle(5,4,3),'Right','5,4,3 Should be Right Triangle')
 
