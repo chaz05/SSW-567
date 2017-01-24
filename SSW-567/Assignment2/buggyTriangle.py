@@ -39,12 +39,12 @@ def classifyTriangle(a,b,c,res = 0.00001):
     
     # verify that all 3 inputs are integers  
     # Python's "isinstance(object,type) returns True if the object is of the specified type
-    if not(isinstance(a,(float,int)) and isinstance(b,(float,int)) and isinstance(c,(float,int))):
+    if not(isinstance(a,(float,int)) and isinstance(b,(float,int)) and isinstance(c,(float,int)) and isinstance(res,(float,int))):
         return 'InvalidInput';
     
     # restrict all sides to being positive non-zero values
     # non-zero in this case must be within the selected resolution 
-    if a <= res or b <= res or c <= res:
+    if res > 0 and (a <= res or b <= res or c <= res):
         return 'InvalidInput'
     
     # order the sides to validate the assumption that the potential hypotenuse is side c
