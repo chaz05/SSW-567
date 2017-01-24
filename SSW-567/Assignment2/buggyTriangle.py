@@ -124,9 +124,9 @@ class TestTriangles(unittest.TestCase):
         # notice that tests can have bugs too!
         self.assertNotEqual(classifyTriangle(10,10,10),'Isoceles','10,10,10 Should be Equilateral')
     def testRobust2(self): 
-        self.assertEqual(classifyTriangle(sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,FLOAT_MAX),'Right','sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,FLOAT_MAX Should be Right Triangle')
+        self.assertEqual(classifyTriangle(FLOAT_MAX,FLOAT_MAX,FLOAT_MAX*sqrt(2)),'NotATriangle','FLOAT_MAX,FLOAT_MAX,FLOAT_MAX*sqrt(2) Should be Right Triangle')
     def testRobust3(self): 
-        self.assertEqual(classifyTriangle(sqrt(sqrt(FLOAT_MAX))/2,sqrt(sqrt(FLOAT_MAX))/2,sqrt(FLOAT_MAX)),'Right','sqrt(sqrt(FLOAT_MAX))/2,sqrt(sqrt(FLOAT_MAX))/2,sqrt(FLOAT_MAX) Should be Right Triangle')
+        self.assertEqual(classifyTriangle(sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2)),'Right','sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2) Should be Right Triangle')
     def testRobust4(self):
         self.assertEqual(classifyTriangle(5,4,3),'Right','5,4,3 Should be Right Triangle')
 
