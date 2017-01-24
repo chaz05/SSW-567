@@ -130,6 +130,8 @@ class TestTriangles(unittest.TestCase):
             classifyTriangle(sqrt(FLOAT_MAX),sqrt(FLOAT_MAX),sqrt(FLOAT_MAX)*sqrt(2))
     def testRobust4(self):
         self.assertEqual(classifyTriangle(5,4,3),'Right','5,4,3 Should be Right Triangle')
+    def testRobust5(self): 
+        self.assertEqual(classifyTriangle(sqrt(FLOAT_MAX)/2,sqrt(FLOAT_MAX)/2,sqrt(((sqrt(FLOAT_MAX)/2)**2)*2)),'Right','sqrt(FLOAT_MAX)/sqrt(2),sqrt(FLOAT_MAX)/sqrt(2),sqrt(FLOAT_MAX) Should be Right Triangle')
 
 if __name__ == '__main__':
     # examples of running the  code
