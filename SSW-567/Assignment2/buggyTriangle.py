@@ -42,8 +42,9 @@ def classifyTriangle(a,b,c,res = 0.00001):
     if not(isinstance(a,(float,int)) and isinstance(b,(float,int)) and isinstance(c,(float,int))):
         return 'InvalidInput';
     
-    # restrict all sides to being positive non-zero values    
-    if a <= 0 or b <= 0 or c <= 0:
+    # restrict all sides to being positive non-zero values
+    # non-zero in this case must be within the selected resolution 
+    if a <= res or b <= res or c <= res:
         return 'InvalidInput'
     
     # order the sides to validate the assumption that the potential hypotenuse is side c
@@ -116,7 +117,7 @@ class TestTriangles(unittest.TestCase):
     def testRange2(self):
         self.assertEqual(classifyTriangle(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX),'Equilateral',' FLOAT_MAX, FLOAT_MAX, FLOAT_MAX should be Equilateral')
     def testRange3(self):
-        self.assertEqual(classifyTriangle(FLOAT_MIN, FLOAT_MIN, FLOAT_MIN),'NotATriangle',' FLOAT_MIN, FLOAT_MIN, FLOAT_MIN should be NotATriangle')
+        self.assertEqual(classifyTriangle(FLOAT_MIN, FLOAT_MIN, FLOAT_MIN),'InvalidInput',' FLOAT_MIN, FLOAT_MIN, FLOAT_MIN should be InvalidInput')
                 
     def testRobust1(self): 
         # define multiple test sets to test different aspects of the code
