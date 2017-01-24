@@ -40,10 +40,13 @@ def classifyTriangle(a,b,c,res = 0.00001):
     # Python's "isinstance(object,type) returns True if the object is of the specified type
     if not(isinstance(a,(float,int)) and isinstance(b,(float,int)) and isinstance(c,(float,int))):
         return 'InvalidInput';
-        
+    
+    # restrict all sides to being positive non-zero values    
     if a <= 0 or b <= 0 or c <= 0:
         return 'InvalidInput'
     
+    # order the sides to validate the assumption that the potential hypotenuse is side c
+    # this simplifies the check for the right angle (a^2 + b^2 = c^2)
     longest = [a, b, c]
     longest.sort()
     a = longest[0]
